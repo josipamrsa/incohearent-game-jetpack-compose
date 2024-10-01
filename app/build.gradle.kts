@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.android.hilt)
+    alias(libs.plugins.jetbrains.kotlin.serialization)
     id("kotlin-kapt")
 }
 
@@ -107,6 +108,9 @@ dependencies {
 
     // MaterialIcons Extended
     implementation(libs.icons.extended)
+
+    // Serialization
+    implementation(libs.kotlinx.serialization.json)
 }
 
 kapt {

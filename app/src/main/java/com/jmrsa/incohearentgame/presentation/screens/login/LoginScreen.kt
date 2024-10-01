@@ -12,12 +12,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.jmrsa.incohearentgame.R
 
 @Composable
 fun LoginScreen() {
+    val viewModel = hiltViewModel<LoginViewModel>()
+    val state = viewModel.state.collectAsStateWithLifecycle()
+    val onEvent = viewModel::onEvent
+
     Column(
         verticalArrangement = Arrangement.spacedBy(
             space = 15.dp,
@@ -28,32 +36,29 @@ fun LoginScreen() {
             .padding(horizontal = 25.dp)
     ) {
         Text(
-            text = "Incohearent is the adult party game " +
-                "that will get you talking! Let the laughs " +
-                "begin as you compete to make sense out of " +
-                "gibberish from one of three categories — kinky, " +
-                "party and pop culture.",
+            text = stringResource(id = R.string.inc_description_main),
             textAlign = TextAlign.Center,
             color = Color.White
         )
 
         OutlinedTextField(
-            value = "",
-            onValueChange = {},
+            value = state.value.username,
+            onValueChange = { onEvent(LoginContract.Event.OnUsernameChanged(it)) },
             label = {
-                Text("Pick any name, but don't go overboard")
+                Text(stringResource(id = R.string.inc_login_username))
             },
-            placeholder = {
-                Text(text = "Type it in here")
+            supportingText = {
+                Text(text = stringResource(id = R.string.inc_login_username_footnote))
             },
             modifier = Modifier.fillMaxWidth()
         )
 
         Button(
             onClick = { /*TODO*/ },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            enabled = state.value.canLogin
         ) {
-            Text(text = "Get in there")
+            Text(text = stringResource(id = R.string.inc_login_button))
         }
     }
 }

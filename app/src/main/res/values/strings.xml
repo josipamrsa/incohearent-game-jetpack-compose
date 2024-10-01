@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">IncohearentGame</string>
+    <string name="inc_description_main">Incohearent is the adult party game that will get you talking! Let the laughs begin as you compete to make sense out of gibberish from one of three categories — kinky, party and pop culture.</string>
+    <string name="inc_login_username">"Pick literally any name*"</string>
+    <string name="inc_login_username_footnote">*That is under 20 characters</string>
+    <string name="inc_login_button">Get in there</string>
 </resources>
