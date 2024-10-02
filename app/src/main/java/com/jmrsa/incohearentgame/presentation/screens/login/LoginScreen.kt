@@ -9,6 +9,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,15 +17,44 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavGraphBuilder
 import com.jmrsa.incohearentgame.R
+import com.jmrsa.incohearentgame.base.composeViewModel
+import com.jmrsa.incohearentgame.base.utils.collectInLaunchedEffect
+import com.jmrsa.incohearentgame.navigation.Destination
+import com.jmrsa.incohearentgame.navigation.typeComposable
+import kotlinx.serialization.Serializable
+
+@Serializable
+object LoginDestination: Destination
+
+fun NavGraphBuilder.loginScreen(
+    onNavigateToLobby: () -> Unit
+) {
+    typeComposable<LoginDestination> {
+        val viewModel = composeViewModel<LoginViewModel>()
+        val state by viewModel.state.collectAsStateWithLifecycle()
+        val onEvent = viewModel::onEvent
+
+        viewModel.effect.collectInLaunchedEffect { effect ->
+            when (effect) {
+                is LoginContract.Effect.ContinueLogin -> onNavigateToLobby()
+            }
+        }
+
+        LoginScreen(
+            state = state,
+            event = onEvent
+        )
+    }
+}
 
 @Composable
-fun LoginScreen() {
-    val viewModel = hiltViewModel<LoginViewModel>()
-    val state = viewModel.state.collectAsStateWithLifecycle()
-    val onEvent = viewModel::onEvent
+fun LoginScreen(
+    state: LoginContract.State,
+    event: (LoginContract.Event) -> Unit
+) {
 
     Column(
         verticalArrangement = Arrangement.spacedBy(
@@ -42,8 +72,8 @@ fun LoginScreen() {
         )
 
         OutlinedTextField(
-            value = state.value.username,
-            onValueChange = { onEvent(LoginContract.Event.OnUsernameChanged(it)) },
+            value = state.username,
+            onValueChange = { event(LoginContract.Event.OnUsernameChanged(it)) },
             label = {
                 Text(stringResource(id = R.string.inc_login_username))
             },
@@ -54,9 +84,9 @@ fun LoginScreen() {
         )
 
         Button(
-            onClick = { /*TODO*/ },
+            onClick = { event(LoginContract.Event.OnContinueLogin) },
             modifier = Modifier.fillMaxWidth(),
-            enabled = state.value.canLogin
+            enabled = state.canLogin
         ) {
             Text(text = stringResource(id = R.string.inc_login_button))
         }
@@ -66,5 +96,8 @@ fun LoginScreen() {
 @Preview
 @Composable
 fun PreviewLoginScreen() {
-    LoginScreen()
+    LoginScreen(
+        state = LoginContract.State(),
+        event = {}
+    )
 }

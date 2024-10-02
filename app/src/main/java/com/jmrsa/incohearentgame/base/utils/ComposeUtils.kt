@@ -20,20 +20,3 @@ fun <T> Flow<T>.collectInLaunchedEffect(function: suspend CoroutineScope.(value 
     }
 }
 
-@Suppress("ComposableNaming")
-@Composable
-fun <T> observeAsEvents(
-    flow: Flow<T>,
-    key1: Any? = null,
-    key2: Any? = null,
-    onEvent: (T) -> Unit
-) {
-    val lifecycleOwner = LocalLifecycleOwner.current
-    LaunchedEffect(key1 = lifecycleOwner.lifecycle, key1, key2) {
-        lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-            withContext(Dispatchers.Main.immediate) {
-                flow.collect(onEvent)
-            }
-        }
-    }
-}

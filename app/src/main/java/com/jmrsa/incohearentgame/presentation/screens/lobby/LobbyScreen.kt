@@ -19,6 +19,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavGraphBuilder
+import com.jmrsa.incohearentgame.navigation.Destination
+import com.jmrsa.incohearentgame.navigation.typeComposable
+import kotlinx.serialization.Serializable
+
+@Serializable
+object LobbyDestination: Destination
+
+fun NavGraphBuilder.lobbyScreen() {
+    typeComposable<LobbyDestination> {
+        LobbyScreen()
+    }
+}
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable

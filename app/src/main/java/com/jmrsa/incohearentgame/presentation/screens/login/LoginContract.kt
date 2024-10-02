@@ -15,5 +15,7 @@ interface LoginContract: BaseContract<LoginContract.State, LoginContract.Event, 
         data object OnContinueLogin : Event
     }
 
-    sealed interface Effect
+    sealed interface Effect {
+        data object ContinueLogin: Effect
+    }
 }

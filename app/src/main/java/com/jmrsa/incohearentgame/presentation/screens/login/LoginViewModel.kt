@@ -1,7 +1,6 @@
 package com.jmrsa.incohearentgame.presentation.screens.login
 
 import com.jmrsa.incohearentgame.base.BaseViewModel
-import com.jmrsa.incohearentgame.navigation.Navigator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,7 +21,9 @@ class LoginViewModel @Inject constructor() : BaseViewModel(), LoginContract {
         when (event) {
             is LoginContract.Event.OnUsernameChanged -> handleUsernameChanged(event.name)
             LoginContract.Event.OnContinueLogin -> {
-                launchInScope { }
+                launchInScope {
+                    mutableEffect.emitInScope(LoginContract.Effect.ContinueLogin)
+                }
             }
         }
      }
