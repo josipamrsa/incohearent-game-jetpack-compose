@@ -20,10 +20,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import com.jmrsa.incohearentgame.R
-import com.jmrsa.incohearentgame.base.composeViewModel
-import com.jmrsa.incohearentgame.base.utils.collectInLaunchedEffect
-import com.jmrsa.incohearentgame.navigation.Destination
-import com.jmrsa.incohearentgame.navigation.typeComposable
+import com.jmrsa.incohearentgame.core.base.composeViewModel
+import com.jmrsa.incohearentgame.core.base.utils.collectInLaunchedEffect
+import com.jmrsa.incohearentgame.core.navigation.Destination
+import com.jmrsa.incohearentgame.core.navigation.typeComposable
 import kotlinx.serialization.Serializable
 
 @Serializable

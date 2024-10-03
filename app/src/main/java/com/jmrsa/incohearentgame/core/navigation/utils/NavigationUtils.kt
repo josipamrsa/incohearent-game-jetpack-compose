@@ -1,7 +1,7 @@
-package com.jmrsa.incohearentgame.navigation.utils
+package com.jmrsa.incohearentgame.core.navigation.utils
 
 import androidx.navigation.NavController
-import com.jmrsa.incohearentgame.navigation.Destination
+import com.jmrsa.incohearentgame.core.navigation.Destination
 
 fun <T: Destination> NavController.navigateWithoutBackstack(route: T) {
     navigate(route) {

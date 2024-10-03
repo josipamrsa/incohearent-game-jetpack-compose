@@ -1,8 +1,9 @@
 package com.jmrsa.incohearentgame.presentation.screens.login
 
-import com.jmrsa.incohearentgame.base.BaseContract
+import com.jmrsa.incohearentgame.core.base.BaseContract
 
-interface LoginContract: BaseContract<LoginContract.State, LoginContract.Event, LoginContract.Effect> {
+interface LoginContract:
+    BaseContract<LoginContract.State, LoginContract.Event, LoginContract.Effect> {
     data class State(
         val username: String = ""
     ) {

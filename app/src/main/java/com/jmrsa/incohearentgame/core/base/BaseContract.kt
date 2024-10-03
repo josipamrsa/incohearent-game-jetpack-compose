@@ -1,4 +1,4 @@
-package com.jmrsa.incohearentgame.base
+package com.jmrsa.incohearentgame.core.base
 
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow

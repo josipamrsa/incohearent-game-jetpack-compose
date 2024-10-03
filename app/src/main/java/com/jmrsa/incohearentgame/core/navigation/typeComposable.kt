@@ -1,4 +1,4 @@
-package com.jmrsa.incohearentgame.navigation
+package com.jmrsa.incohearentgame.core.navigation
 
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.runtime.Composable

@@ -1,41 +1,54 @@
 package com.jmrsa.incohearentgame.presentation.screens.lobby
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
-import com.jmrsa.incohearentgame.navigation.Destination
-import com.jmrsa.incohearentgame.navigation.typeComposable
+import com.jmrsa.incohearentgame.core.base.composeViewModel
+import com.jmrsa.incohearentgame.core.base.utils.collectInLaunchedEffect
+import com.jmrsa.incohearentgame.core.navigation.Destination
+import com.jmrsa.incohearentgame.core.navigation.typeComposable
+import com.jmrsa.incohearentgame.presentation.screens.lobby.components.LobbyInfoView
+import com.jmrsa.incohearentgame.presentation.screens.lobby.components.PlayerGridView
+import com.jmrsa.incohearentgame.presentation.shared.base.ScaffoldBaseScreen
+import com.jmrsa.incohearentgame.presentation.shared.topbars.BasicTopBar
 import kotlinx.serialization.Serializable
 
 @Serializable
-object LobbyDestination: Destination
+object LobbyDestination : Destination
 
 fun NavGraphBuilder.lobbyScreen() {
     typeComposable<LobbyDestination> {
-        LobbyScreen()
+        val viewModel = composeViewModel<LobbyViewModel>()
+        val state by viewModel.state.collectAsStateWithLifecycle()
+        val onEvent = viewModel::onEvent
+
+        viewModel.effect.collectInLaunchedEffect {
+
+        }
+
+        LobbyScreen(
+            state = state,
+            event = onEvent
+        )
     }
 }
 
-@OptIn(ExperimentalLayoutApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LobbyScreen() {
+fun LobbyScreen(
+    state: LobbyContract.State,
+    event: (LobbyContract.Event) -> Unit
+) {
     val players = listOf(
         "Luke",
         "Christopher",
@@ -46,59 +59,42 @@ fun LobbyScreen() {
         "Aydan",
         "Matthew",
         "Andrew"
-    ).chunked(4)
+    )
 
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 15.dp)
-    ) {
-        items(players) { row ->
-            FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                row.forEach { player ->
-                    AssistChip(onClick = { /*TODO*/ }, label = {
-                        Text(text = player, color = Color.White)
-                    })
-                }
-            }
-        }
+    val notifications = emptyList<String>()
 
-        item {
-            Column(
+    ScaffoldBaseScreen(
+        modifier = Modifier.fillMaxSize(),
+        topBar = {
+            BasicTopBar(
+                title = { Text(text = "Lobby") }
+            )
+        },
+        bottomBar = {
+            Button(
+                onClick = { /*TODO*/ },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .fillParentMaxHeight(0.8f)
+                    .padding(
+                        vertical = 10.dp,
+                        horizontal = 15.dp
+                    )
             ) {
-                Column(
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier
-                        .padding(vertical = 10.dp)
-                        .background(Color.DarkGray)
-                        .fillMaxWidth()
-                        .weight(1f)
-                ) {
-                    Text(text = "Info zone", color = Color.White)
-                }
-
-                Button(
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 10.dp)
-                ) {
-                    Text(text = "Begin game")
-                }
+                Text(text = "Begin game")
             }
-        }
+        },
+        isScrollEnabled = false
+    ) {
+        PlayerGridView(playerList = players)
+        LobbyInfoView(notifications)
     }
 }
 
 @Preview
 @Composable
 fun PreviewLobbyScreen() {
-    LobbyScreen()
+    LobbyScreen(
+        state = LobbyContract.State,
+        event = {}
+    )
 }

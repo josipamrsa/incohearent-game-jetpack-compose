@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.jmrsa.incohearentgame.navigation.MainNavComponent
+import com.jmrsa.incohearentgame.core.navigation.MainNavComponent
 import com.jmrsa.incohearentgame.ui.theme.IncohearentGameTheme
 import dagger.hilt.android.AndroidEntryPoint
 

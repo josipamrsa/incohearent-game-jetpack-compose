@@ -1,4 +1,4 @@
-package com.jmrsa.incohearentgame.navigation
+package com.jmrsa.incohearentgame.core.navigation
 
 import android.net.Uri
 import android.os.Bundle

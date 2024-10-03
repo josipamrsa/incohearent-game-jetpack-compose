@@ -1,6 +1,6 @@
 package com.jmrsa.incohearentgame.presentation.screens.login
 
-import com.jmrsa.incohearentgame.base.BaseViewModel
+import com.jmrsa.incohearentgame.core.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

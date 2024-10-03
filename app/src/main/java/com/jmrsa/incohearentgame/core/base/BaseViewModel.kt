@@ -1,4 +1,4 @@
-package com.jmrsa.incohearentgame.base
+package com.jmrsa.incohearentgame.core.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
