@@ -2,9 +2,9 @@ package com.jmrsa.incohearentgame.presentation.shared.topbars
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
@@ -15,18 +15,17 @@ import androidx.compose.ui.unit.Dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BasicTopBar(
+fun CenterTopBar(
     title: @Composable () -> Unit,
     modifier: Modifier = Modifier,
     navigationIcon: @Composable () -> Unit = {},
     actions: @Composable() (RowScope.() -> Unit) = {},
     expandedHeight: Dp = TopAppBarDefaults.TopAppBarExpandedHeight,
     windowInsets: WindowInsets = TopAppBarDefaults.windowInsets,
-    colors: TopAppBarColors = TopAppBarDefaults
-        .topAppBarColors(),
+    colors: TopAppBarColors = TopAppBarDefaults.centerAlignedTopAppBarColors(),
     scrollBehavior: TopAppBarScrollBehavior? = null
 ) {
-    TopAppBar(
+    CenterAlignedTopAppBar(
         title = title,
         modifier = Modifier
             //.statusBarsPadding()
@@ -41,9 +40,10 @@ fun BasicTopBar(
     )
 }
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @Preview
-fun PreviewBasicTopBar() {
-    BasicTopBar(title = { Text(text = "Test") })
+fun PreviewCenterTopBar() {
+    CenterTopBar(title = { Text(text = "Test") })
 }

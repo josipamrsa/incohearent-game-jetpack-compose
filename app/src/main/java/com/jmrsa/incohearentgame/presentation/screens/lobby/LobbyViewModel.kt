@@ -1,6 +1,5 @@
 package com.jmrsa.incohearentgame.presentation.screens.lobby
 
-import androidx.compose.ui.graphics.Color
 import com.jmrsa.incohearentgame.core.base.BaseViewModel
 import com.jmrsa.incohearentgame.presentation.utils.DUMMY_PLAYERS
 import com.jmrsa.incohearentgame.ui.theme.LightBlue

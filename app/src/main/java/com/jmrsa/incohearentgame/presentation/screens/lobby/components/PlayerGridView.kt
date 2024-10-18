@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jmrsa.incohearentgame.presentation.utils.DUMMY_PLAYERS
 import com.jmrsa.incohearentgame.presentation.utils.DUMMY_PLAYER_COLORS
+import com.jmrsa.incohearentgame.ui.theme.IncohearentGameTheme
 
 @Composable
 fun PlayerChip(
@@ -78,11 +79,13 @@ fun PreviewPlayerChip() {
 @Preview
 @Composable
 fun PreviewPlayerGridView() {
-    val players = DUMMY_PLAYERS
-    val colors = DUMMY_PLAYER_COLORS
+    IncohearentGameTheme {
+        val players = DUMMY_PLAYERS
+        val colors = DUMMY_PLAYER_COLORS
 
-    PlayerGridView(
-        playerList = players,
-        playerColors = colors
-    )
+        PlayerGridView(
+            playerList = players,
+            playerColors = colors
+        )
+    }
 }

@@ -4,4 +4,7 @@
     <string name="inc_login_username">"Pick literally any name*"</string>
     <string name="inc_login_username_footnote">*That is under 20 characters</string>
     <string name="inc_login_button">Get in there</string>
+    <string name="inc_lobby_default_name">Lobby</string>
+    <string name="inc_begin_game_button">Begin game</string>
+    <string name="inc_lobby_info_no_notifications">No new notifications</string>
 </resources>

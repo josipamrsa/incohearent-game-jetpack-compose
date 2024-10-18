@@ -9,6 +9,7 @@ interface LobbyContract:
     data class State(
         val players: List<String> = emptyList(),
         val playerColors: List<Color> = emptyList(),
+        val lobbyName: String = "",
         val lobbyNotifications: List<String> = emptyList()
     )
 

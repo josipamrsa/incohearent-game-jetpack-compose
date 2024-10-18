@@ -7,13 +7,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.jmrsa.incohearentgame.R
+import com.jmrsa.incohearentgame.ui.theme.IncohearentGameTheme
 
 @Composable
 fun LobbyInfoView(notifications: List<String>? = null) {
@@ -24,15 +27,14 @@ fun LobbyInfoView(notifications: List<String>? = null) {
             .fillMaxSize()
             .padding(15.dp)
             .background(
-                color = Color.DarkGray,
+                color = MaterialTheme.colorScheme.tertiaryContainer,
                 shape = RoundedCornerShape(5.dp)
             )
     ) {
         if (notifications.isNullOrEmpty()) {
             item {
                 Text(
-                    text = "No new notifications",
-                    color = Color.White,
+                    text = stringResource(id = R.string.inc_lobby_info_no_notifications),
                     modifier = Modifier.padding(
                         vertical = 5.dp,
                         horizontal = 15.dp
@@ -44,7 +46,6 @@ fun LobbyInfoView(notifications: List<String>? = null) {
             items(notifications) { notification ->
                 Text(
                     text = notification,
-                    color = Color.White,
                     modifier = Modifier.padding(
                         vertical = 5.dp,
                         horizontal = 15.dp
@@ -69,5 +70,7 @@ fun PreviewLobbyInfoView() {
 @Preview
 @Composable
 fun PreviewEmptyLobbyInfoView() {
-    LobbyInfoView()
+    IncohearentGameTheme {
+        LobbyInfoView()
+    }
 }
