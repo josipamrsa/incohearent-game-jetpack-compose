@@ -1,6 +1,6 @@
 # Incohearent Game App
 
-A digital version of the popular **Incohearent** card game, built using modern tools such as **Jetpack Compose** for the Android client and **Ktor** for the backend. This app brings the fun and hilarity of the physical game to your mobile devices, allowing players to enjoy the game remotely with friends or by themselves.
+A digital version of the popular **Incohearent** card game, built with **Jetpack Compose** for Android client and **Ktor** for the backend. This app brings the fun and hilarity of the physical game to your mobile devices, allowing players to enjoy the game remotely with friends or by themselves.
 
 ## About Incohearent
 **Incohearent** is a party game that challenges players to decipher phrases made of incoherent, gibberish-like words into understandable phrases or expressions. Each card contains a seemingly nonsensical set of words, but when spoken aloud, the real phrase begins to emerge.
