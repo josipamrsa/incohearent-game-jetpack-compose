@@ -17,6 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.jmrsa.incohearentgame.presentation.utils.DUMMY_PLAYERS
+import com.jmrsa.incohearentgame.presentation.utils.DUMMY_PLAYER_COLORS
 
 @Composable
 fun PlayerChip(
@@ -40,15 +42,10 @@ fun PlayerChip(
 @Composable
 fun PlayerGridView(
     playerList: List<String>,
+    playerColors: List<Color>,
     sections: Int = 4
 ) {
-    val randomColors = listOf(
-        Color(0xff61a0af),
-        Color(0xff96c9dc),
-        Color(0xfff06c9b),
-        Color(0xfff9b9b7),
-        Color(0xfff5d491),
-    )
+
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
@@ -65,7 +62,7 @@ fun PlayerGridView(
                 row.forEach { player ->
                     PlayerChip(
                         label = player,
-                        color = randomColors.random()
+                        color = playerColors.random()
                     )
                 }
             }
@@ -81,17 +78,11 @@ fun PreviewPlayerChip() {
 @Preview
 @Composable
 fun PreviewPlayerGridView() {
-    val players = listOf(
-        "Luke",
-        "Christopher",
-        "Samuel",
-        "Peter",
-        "Johnathan",
-        "James",
-        "Aydan",
-        "Matthew",
-        "Andrew"
-    )
+    val players = DUMMY_PLAYERS
+    val colors = DUMMY_PLAYER_COLORS
 
-    PlayerGridView(players)
+    PlayerGridView(
+        playerList = players,
+        playerColors = colors
+    )
 }

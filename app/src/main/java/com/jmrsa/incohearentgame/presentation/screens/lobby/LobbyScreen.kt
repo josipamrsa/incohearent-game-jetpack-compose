@@ -32,9 +32,7 @@ fun NavGraphBuilder.lobbyScreen() {
         val state by viewModel.state.collectAsStateWithLifecycle()
         val onEvent = viewModel::onEvent
 
-        viewModel.effect.collectInLaunchedEffect {
-
-        }
+        viewModel.effect.collectInLaunchedEffect { }
 
         LobbyScreen(
             state = state,
@@ -49,20 +47,6 @@ fun LobbyScreen(
     state: LobbyContract.State,
     event: (LobbyContract.Event) -> Unit
 ) {
-    val players = listOf(
-        "Luke",
-        "Christopher",
-        "Samuel",
-        "Peter",
-        "Johnathan",
-        "James",
-        "Aydan",
-        "Matthew",
-        "Andrew"
-    )
-
-    val notifications = emptyList<String>()
-
     ScaffoldBaseScreen(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -85,8 +69,12 @@ fun LobbyScreen(
         },
         isScrollEnabled = false
     ) {
-        PlayerGridView(playerList = players)
-        LobbyInfoView(notifications)
+        PlayerGridView(
+            playerList = state.players,
+            playerColors = state.playerColors
+        )
+
+        LobbyInfoView(state.lobbyNotifications)
     }
 }
 
@@ -94,7 +82,7 @@ fun LobbyScreen(
 @Composable
 fun PreviewLobbyScreen() {
     LobbyScreen(
-        state = LobbyContract.State,
+        state = LobbyContract.State(),
         event = {}
     )
 }

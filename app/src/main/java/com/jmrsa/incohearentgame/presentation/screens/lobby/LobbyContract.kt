@@ -1,10 +1,16 @@
 package com.jmrsa.incohearentgame.presentation.screens.lobby
 
+import androidx.compose.ui.graphics.Color
 import com.jmrsa.incohearentgame.core.base.BaseContract
 
 interface LobbyContract:
     BaseContract<LobbyContract.State, LobbyContract.Event, LobbyContract.Effect> {
-    data object State
+
+    data class State(
+        val players: List<String> = emptyList(),
+        val playerColors: List<Color> = emptyList(),
+        val lobbyNotifications: List<String> = emptyList()
+    )
 
     sealed interface Event
 

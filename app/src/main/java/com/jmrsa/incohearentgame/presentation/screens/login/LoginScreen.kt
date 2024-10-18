@@ -67,8 +67,7 @@ fun LoginScreen(
     ) {
         Text(
             text = stringResource(id = R.string.inc_description_main),
-            textAlign = TextAlign.Center,
-            color = Color.White
+            textAlign = TextAlign.Center
         )
 
         OutlinedTextField(
