@@ -1,9 +1,14 @@
 package com.jmrsa.incohearentgame.core.navigation
 
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.jmrsa.incohearentgame.core.navigation.utils.defaultEnterTransition
+import com.jmrsa.incohearentgame.core.navigation.utils.defaultExitTransition
 import com.jmrsa.incohearentgame.core.navigation.utils.navigateWithoutBackstack
 import com.jmrsa.incohearentgame.presentation.screens.lobby.LobbyDestination
 import com.jmrsa.incohearentgame.presentation.screens.lobby.lobbyScreen
@@ -18,7 +23,7 @@ fun MainNavComponent(
     NavHost(
         navController = navController,
         startDestination = LoginDestination,
-        modifier = modifier
+        modifier = modifier,
     ) {
         loginScreen(
             onNavigateToLobby = { navController.navigateWithoutBackstack(LobbyDestination) }

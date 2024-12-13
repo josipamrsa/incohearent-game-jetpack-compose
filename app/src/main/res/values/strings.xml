@@ -7,4 +7,5 @@
     <string name="inc_lobby_default_name">Lobby</string>
     <string name="inc_begin_game_button">Begin game</string>
     <string name="inc_lobby_info_no_notifications">No new notifications</string>
+    <string name="inc_game_round_judge_label">Judge</string>
 </resources>

@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.navigation.compose.rememberNavController
 import com.jmrsa.incohearentgame.core.navigation.MainNavComponent
 import com.jmrsa.incohearentgame.ui.theme.IncohearentGameTheme
@@ -22,10 +24,15 @@ class MainActivity : ComponentActivity() {
             IncohearentGameTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     val navController = rememberNavController()
+                    val originDirection = LocalLayoutDirection.current
                     
                     MainNavComponent(
                         navController = navController,
-                        modifier = Modifier.padding(innerPadding)
+                        modifier = Modifier.padding(
+                            start = innerPadding.calculateLeftPadding(originDirection),
+                            end = innerPadding.calculateLeftPadding(originDirection),
+                            bottom = innerPadding.calculateBottomPadding()
+                        )
                     )
                 }
             }
