@@ -6,5 +6,4 @@ import com.jmrsa.incohearentgame.presentation.shared.base.ScaffoldBaseScreen
 @Composable
 fun GameScreen() {
     ScaffoldBaseScreen {  }
-
 }

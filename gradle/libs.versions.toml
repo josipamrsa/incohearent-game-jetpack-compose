@@ -1,5 +1,5 @@
 [versions]
-agp = "8.7.1"
+agp = "8.7.2"
 kotlin = "2.0.20"
 coreKtx = "1.13.1"
 junit = "4.13.2"
@@ -20,6 +20,8 @@ retrofit = "2.11.0"
 okhttp = "5.0.0-alpha.14"
 kotlin-serialization = "1.7.2"
 google-services = "4.4.2"
+ktorVersion = "1.6.3"
+multidex = "2.0.1"
 
 
 [libraries]
@@ -85,6 +87,12 @@ okhttp-interceptor = { group = "com.squareup.okhttp3", name = "logging-intercept
 coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version = "1.8.1" }
 
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlin-serialization" }
+
+ktor-core = {group = "io.ktor", name = "ktor-client-core", version.ref = "ktorVersion"}
+ktor-cio = {group = "io.ktor", name = "ktor-client-cio", version.ref = "ktorVersion"}
+ktor-websockets = {group = "io.ktor", name = "ktor-client-websockets", version.ref = "ktorVersion"}
+ktor-logging = {group = "io.ktor", name = "ktor-client-logging", version.ref = "ktorVersion"}
+androidx-multidex = { group = "androidx.multidex", name = "multidex", version.ref = "multidex" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
