@@ -26,7 +26,7 @@ fun MainNavComponent(
         modifier = modifier,
     ) {
         loginScreen(
-            onNavigateToLobby = { navController.navigateWithoutBackstack(LobbyDestination) }
+            onNavigateToLobby = { username -> navController.navigateWithoutBackstack(LobbyDestination(username)) }
         )
         lobbyScreen()
     }

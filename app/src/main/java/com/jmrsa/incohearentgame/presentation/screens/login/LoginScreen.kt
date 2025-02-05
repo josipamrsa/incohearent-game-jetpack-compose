@@ -31,7 +31,7 @@ import kotlinx.serialization.Serializable
 object LoginDestination: Destination
 
 fun NavGraphBuilder.loginScreen(
-    onNavigateToLobby: () -> Unit
+    onNavigateToLobby: (username: String) -> Unit
 ) {
     typeComposable<LoginDestination> {
         val viewModel = composeViewModel<LoginViewModel>()
@@ -40,7 +40,7 @@ fun NavGraphBuilder.loginScreen(
 
         viewModel.effect.collectInLaunchedEffect { effect ->
             when (effect) {
-                is LoginContract.Effect.ContinueLogin -> onNavigateToLobby()
+                is LoginContract.Effect.ContinueLogin -> onNavigateToLobby(state.username)
             }
         }
 

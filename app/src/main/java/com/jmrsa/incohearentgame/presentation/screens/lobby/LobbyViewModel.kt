@@ -1,8 +1,19 @@
 package com.jmrsa.incohearentgame.presentation.screens.lobby
 
+import android.annotation.SuppressLint
+import android.util.Log
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.jmrsa.data.networking.api.RealtimeClient
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.toRoute
+import com.jmrsa.data.networking.api.models.decodeJsonToApiPlayer
+import com.jmrsa.data.networking.api.realtime_client.RealtimeClient
+import com.jmrsa.domain.repositories.PlayerRepository
+import com.jmrsa.domain.use_cases.LobbyUseCase
 import com.jmrsa.incohearentgame.core.base.BaseViewModel
+import com.jmrsa.incohearentgame.presentation.models.AppPlayer
+import com.jmrsa.incohearentgame.presentation.models.toAppPlayer
+import com.jmrsa.incohearentgame.presentation.models.toPlayer
 import com.jmrsa.incohearentgame.presentation.utils.DUMMY_PLAYERS
 import com.jmrsa.incohearentgame.ui.theme.LightBlue
 import com.jmrsa.incohearentgame.ui.theme.LightCoral
@@ -16,38 +27,66 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import javax.inject.Inject
 
+@SuppressLint("LogNotTimber")
 @HiltViewModel
 class LobbyViewModel @Inject constructor(
-    private val client: RealtimeClient
+    private val lobbyUseCase: LobbyUseCase,
+    savedStateHandle: SavedStateHandle
 ) : BaseViewModel(), LobbyContract {
-    private val mutableState = MutableStateFlow(LobbyContract.State(
-        players = PLAYERS,
-        playerColors = PLAYER_COLORS
-    ))
 
-    private val _isConnecting = MutableStateFlow(false)
-    val isConnect = _isConnecting.asStateFlow()
+    private val args: LobbyDestination = savedStateHandle.toRoute()
+
+    private val mutableState = MutableStateFlow(
+        LobbyContract.State(
+            players = PLAYERS,
+            playerColors = PLAYER_COLORS
+        )
+    )
 
     override val state = mutableState.asStateFlow()
 
     private val mutableEffect = MutableSharedFlow<LobbyContract.Effect>()
     override val effect = mutableEffect.asSharedFlow()
 
+    private fun handlePlayerUpdates(update: String) {
+        val player = update.decodeJsonToApiPlayer().toAppPlayer()
+        val updatedList =
+            mutableState.value.players.toMutableList().plus(player.username)
+
+        mutableState.update { it.copy(players = updatedList) }
+    }
+
     init {
-        viewModelScope.launch {
-            client.connect().collect { msg ->
-                msg
+        val player = AppPlayer(args.username)
+        mutableState.update { it.copy(player = player) }
+
+        launchInScope {
+            lobbyUseCase.observeLobbyMessages().collect { update ->
+                when (update.action) {
+                    "NEW_PLAYER_JOINED" -> handlePlayerUpdates(update.data)
+
+                    else -> {
+                        Log.d("LobbyViewModel", "${update.action} >> ${update.data}")
+                    }
+                }
             }
+
+        }
+
+        launchInScope {
+            lobbyUseCase.logPlayer(player = player.toPlayer())
         }
     }
 
@@ -63,6 +102,6 @@ class LobbyViewModel @Inject constructor(
             LightOrange,
             MuddyYellow
         )
-        val PLAYERS = DUMMY_PLAYERS
+        val PLAYERS = emptyList<String>()
     }
 }

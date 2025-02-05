@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.ksp)
     alias(libs.plugins.android.hilt)
+    alias(libs.plugins.jetbrains.kotlin.serialization)
     id("kotlin-kapt")
 }
 
@@ -59,6 +60,9 @@ dependencies {
 
     // Retrofit
     implementation(libs.retrofit.core)
+
+    // Serialization
+    implementation(libs.kotlinx.serialization.json)
 
     // OkHttp3
     implementation(libs.okhttp.core)

@@ -33,7 +33,9 @@ import com.jmrsa.incohearentgame.ui.theme.IncohearentGameTheme
 
 
 @Serializable
-object LobbyDestination : Destination
+data class LobbyDestination(
+    val username: String
+) : Destination
 
 fun NavGraphBuilder.lobbyScreen() {
     typeComposable<LobbyDestination> {
