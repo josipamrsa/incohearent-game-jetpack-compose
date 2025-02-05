@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.navigation.compose.rememberNavController
 import com.jmrsa.incohearentgame.core.navigation.MainNavComponent
 import com.jmrsa.incohearentgame.ui.theme.IncohearentGameTheme

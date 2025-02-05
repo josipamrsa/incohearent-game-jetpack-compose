@@ -1,20 +1,13 @@
 package com.jmrsa.incohearentgame.presentation.screens.login
 
-import androidx.lifecycle.viewModelScope
-import com.jmrsa.data.networking.api.realtime_client.RealtimeClient
 import com.jmrsa.domain.repositories.PlayerRepository
 import com.jmrsa.incohearentgame.core.base.BaseViewModel
-import com.jmrsa.incohearentgame.presentation.models.AppPlayer
-import com.jmrsa.incohearentgame.presentation.models.toPlayer
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel

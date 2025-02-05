@@ -1,7 +1,6 @@
 package com.jmrsa.data.repositories
 
 import android.annotation.SuppressLint
-import android.util.Log
 import com.jmrsa.data.networking.api.converters.toApiPlayer
 import com.jmrsa.data.networking.api.models.encodeApiPlayerToJson
 import com.jmrsa.data.networking.api.realtime_client.RealtimeClient

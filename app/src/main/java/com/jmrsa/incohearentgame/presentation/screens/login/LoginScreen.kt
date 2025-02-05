@@ -23,8 +23,6 @@ import com.jmrsa.incohearentgame.core.base.composeViewModel
 import com.jmrsa.incohearentgame.core.base.utils.collectInLaunchedEffect
 import com.jmrsa.incohearentgame.core.navigation.Destination
 import com.jmrsa.incohearentgame.core.navigation.typeComposable
-import com.jmrsa.incohearentgame.core.navigation.utils.defaultEnterTransition
-import com.jmrsa.incohearentgame.core.navigation.utils.defaultExitTransition
 import kotlinx.serialization.Serializable
 
 @Serializable

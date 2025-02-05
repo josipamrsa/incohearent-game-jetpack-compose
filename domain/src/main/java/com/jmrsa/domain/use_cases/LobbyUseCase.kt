@@ -3,7 +3,6 @@ package com.jmrsa.domain.use_cases
 import com.jmrsa.domain.models.ActionData
 import com.jmrsa.domain.models.Player
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.SharedFlow
 
 interface LobbyUseCase {
     suspend fun observeLobbyMessages(): Flow<ActionData>

@@ -1,6 +1,5 @@
 package com.jmrsa.data.networking.api.models
 
-import com.jmrsa.domain.models.Player
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.encodeToJsonElement
