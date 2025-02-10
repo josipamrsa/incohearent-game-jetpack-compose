@@ -2,6 +2,7 @@ package com.jmrsa.incohearentgame.presentation.screens.lobby
 
 import androidx.compose.ui.graphics.Color
 import com.jmrsa.incohearentgame.core.base.BaseContract
+import com.jmrsa.incohearentgame.presentation.models.AppNotificationMessage
 import com.jmrsa.incohearentgame.presentation.models.AppPlayer
 
 interface LobbyContract:
@@ -12,7 +13,7 @@ interface LobbyContract:
         val players: List<String> = emptyList(),
         val playerColors: List<Color> = emptyList(),
         val lobbyName: String = "",
-        val lobbyNotifications: List<String> = emptyList()
+        val lobbyNotifications: List<AppNotificationMessage> = emptyList()
     )
 
     sealed interface Event

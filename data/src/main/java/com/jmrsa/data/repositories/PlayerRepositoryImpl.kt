@@ -5,6 +5,7 @@ import com.jmrsa.data.networking.api.converters.toApiPlayer
 import com.jmrsa.data.networking.api.models.encodeApiPlayerToJson
 import com.jmrsa.data.networking.api.realtime_client.RealtimeClient
 import com.jmrsa.data.networking.api.realtime_client.converter.toActionData
+import com.jmrsa.data.networking.api.realtime_client.model.SendEventMessages
 import com.jmrsa.domain.models.ActionData
 import com.jmrsa.domain.models.Player
 import com.jmrsa.domain.repositories.PlayerRepository
@@ -19,6 +20,6 @@ class PlayerRepositoryImpl(
     override fun observeSessionFlow(): Flow<ActionData> = client.sessionFlow.map { it.toActionData() }
 
     override suspend fun logNewPlayer(player: Player) {
-        client.sendAction("GREET_USER", player.toApiPlayer().encodeApiPlayerToJson())
+        client.sendAction(SendEventMessages.LOG_NEW_PLAYER, player.toApiPlayer().encodeApiPlayerToJson())
     }
 }

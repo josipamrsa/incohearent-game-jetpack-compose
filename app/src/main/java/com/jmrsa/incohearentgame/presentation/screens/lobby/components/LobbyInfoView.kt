@@ -16,10 +16,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jmrsa.incohearentgame.R
+import com.jmrsa.incohearentgame.presentation.models.AppNotificationMessage
+import com.jmrsa.incohearentgame.presentation.utils.formatters.NotificationFormatter
 import com.jmrsa.incohearentgame.ui.theme.IncohearentGameTheme
 
 @Composable
-fun LobbyInfoView(notifications: List<String>? = null) {
+fun LobbyInfoView(notifications: List<AppNotificationMessage>? = null) {
     LazyColumn(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -45,7 +47,7 @@ fun LobbyInfoView(notifications: List<String>? = null) {
         } else {
             items(notifications) { notification ->
                 Text(
-                    text = notification,
+                    text = NotificationFormatter.toLobbyNotification(notification.args),
                     modifier = Modifier.padding(
                         vertical = 5.dp,
                         horizontal = 15.dp
@@ -60,10 +62,11 @@ fun LobbyInfoView(notifications: List<String>? = null) {
 @Composable
 fun PreviewLobbyInfoView() {
     val notifs = listOf(
-        "Player snitch has joined the lobby!",
-        "Player damn has changed the lobby name!",
-        "Player sonny boy has left the lobby!"
-    )
+        AppNotificationMessage(R.string.inc_notif_new_player_joined, listOf("snitch")),
+        AppNotificationMessage(R.string.inc_notif_new_player_joined, listOf("damn")),
+        AppNotificationMessage(R.string.inc_notif_new_player_joined, listOf("sonny")),
+        )
+
     LobbyInfoView(notifs)
 }
 

@@ -8,4 +8,7 @@
     <string name="inc_begin_game_button">Begin game</string>
     <string name="inc_lobby_info_no_notifications">No new notifications</string>
     <string name="inc_game_round_judge_label">Judge</string>
+
+    <!-- NOTIFICATIONS -->
+    <string name="inc_notif_new_player_joined">%s has joined the lobby!</string>
 </resources>

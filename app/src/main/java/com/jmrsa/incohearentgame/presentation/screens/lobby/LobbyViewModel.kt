@@ -6,7 +6,10 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.toRoute
 import com.jmrsa.data.networking.api.models.decodeJsonToApiPlayer
 import com.jmrsa.domain.use_cases.LobbyUseCase
+import com.jmrsa.incohearentgame.R
 import com.jmrsa.incohearentgame.core.base.BaseViewModel
+import com.jmrsa.incohearentgame.core.network.ReceiveEventMessages
+import com.jmrsa.incohearentgame.presentation.models.AppNotificationMessage
 import com.jmrsa.incohearentgame.presentation.models.AppPlayer
 import com.jmrsa.incohearentgame.presentation.models.toAppPlayer
 import com.jmrsa.incohearentgame.presentation.models.toPlayer
@@ -48,8 +51,16 @@ class LobbyViewModel @Inject constructor(
         val player = update.decodeJsonToApiPlayer().toAppPlayer()
         val updatedList =
             mutableState.value.players.toMutableList().plus(player.username)
+        val lobbyMessages = mutableState.value.lobbyNotifications.toMutableList().plus(
+            AppNotificationMessage(R.string.inc_notif_new_player_joined, listOf(player.username))
+        )
 
-        mutableState.update { it.copy(players = updatedList) }
+        mutableState.update {
+            it.copy(
+                players = updatedList,
+                lobbyNotifications = lobbyMessages
+            )
+        }
     }
 
     init {
@@ -59,7 +70,7 @@ class LobbyViewModel @Inject constructor(
         launchInScope {
             lobbyUseCase.observeLobbyMessages().collect { update ->
                 when (update.action) {
-                    "NEW_PLAYER_JOINED" -> handlePlayerUpdates(update.data)
+                    ReceiveEventMessages.NEW_PLAYER_JOINED -> handlePlayerUpdates(update.data)
 
                     else -> {
                         Log.d("LobbyViewModel", "${update.action} >> ${update.data}")
