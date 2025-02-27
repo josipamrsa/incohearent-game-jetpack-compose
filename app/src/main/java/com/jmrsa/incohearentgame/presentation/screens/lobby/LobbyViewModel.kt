@@ -19,6 +19,7 @@ import com.jmrsa.incohearentgame.ui.theme.LightOrange
 import com.jmrsa.incohearentgame.ui.theme.MuddyYellow
 import com.jmrsa.incohearentgame.ui.theme.SeaGreen
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -81,6 +82,7 @@ class LobbyViewModel @Inject constructor(
         }
 
         launchInScope {
+            delay(1000)
             lobbyUseCase.logPlayer(player = player.toPlayer())
         }
     }

@@ -14,7 +14,7 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val playerRepository: PlayerRepository
 ) : BaseViewModel(), LoginContract {
-    private val mutableState = MutableStateFlow(LoginContract.State("Josipa"))
+    private val mutableState = MutableStateFlow(LoginContract.State(""))
     override val state = mutableState.asStateFlow()
 
     private val mutableEffect = MutableSharedFlow<LoginContract.Effect>()

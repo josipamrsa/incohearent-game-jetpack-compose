@@ -47,3 +47,9 @@ val LightBlue = Color(0xff96c9dc)
 val LightCoral = Color(0xfff06c9b)
 val LightOrange = Color(0xfff9b9b7)
 val MuddyYellow = Color(0xfff5d491)
+
+// GAME COLORS
+
+val IncInputFillColor = Color(0xFFFFDEF2)
+val IncInputFillText = Color(0xFF98557E)
+val IncButtonFillColor = Color(0xFFAFD3E1)
