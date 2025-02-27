@@ -1,4 +1,4 @@
-package com.example.plugins.helpers
+package com.example.models
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
