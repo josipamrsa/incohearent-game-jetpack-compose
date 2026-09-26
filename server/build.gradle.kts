@@ -1,12 +1,15 @@
-
 plugins {
-    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.jetbrains.kotlin.jvm)
     alias(libs.plugins.ktor)
-    alias(libs.plugins.kotlin.plugin.serialization)
+    alias(libs.plugins.jetbrains.kotlin.serialization)
 }
 
 group = "com.example"
 version = "0.0.1"
+
+kotlin {
+    jvmToolchain(17)
+}
 
 application {
     mainClass.set("io.ktor.server.netty.EngineMain")
@@ -15,14 +18,10 @@ application {
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
 }
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     implementation(libs.ktor.server.content.negotiation)
     implementation(libs.ktor.server.core)
-    implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.ktor.server.serialization.kotlinx.json)
     implementation(libs.ktor.server.websockets)
     implementation(libs.ktor.server.host.common)
     implementation(libs.ktor.server.netty)
