@@ -1,9 +1,8 @@
 package com.example.sessions
 
-import com.example.models.ActionData
+import com.jmrsa.protocol.ServerMessage
+import com.jmrsa.protocol.encode
 import io.ktor.websocket.*
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.encodeToJsonElement
 
 object SessionManager {
     private val _sessions = mutableSetOf<WebSocketSession>()
@@ -16,10 +15,10 @@ object SessionManager {
         _sessions.remove(session)
     }
 
-    suspend fun broadcastMessage(actionData: ActionData) {
-        println("Data received: >> " + actionData.data)
+    suspend fun broadcastMessage(message: ServerMessage) {
+        println("Broadcasting: >> $message")
         _sessions.forEach { session ->
-            session.send(Frame.Text(Json.encodeToJsonElement(actionData).toString()))
+            session.send(Frame.Text(message.encode()))
         }
     }
 }

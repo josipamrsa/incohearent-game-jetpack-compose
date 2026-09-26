@@ -1,19 +1,19 @@
 package com.example.base
 
-import com.example.models.ActionData
-import com.example.models.decodeActionDataFromJson
+import com.jmrsa.protocol.ClientMessage
+import com.jmrsa.protocol.decodeClientMessage
 import io.ktor.server.routing.*
 import io.ktor.websocket.*
 import kotlinx.coroutines.channels.ReceiveChannel
 
-suspend fun Route.listenForIncomingFrames(incoming: ReceiveChannel<Frame>, action: (ActionData) -> Unit) {
+suspend fun Route.listenForIncomingFrames(incoming: ReceiveChannel<Frame>, action: (ClientMessage) -> Unit) {
     for (frame in incoming) {
         println("RECEIVED >> $frame")
         when (frame) {
             is Frame.Text -> {
                 val receivedMessage = frame.readText()
                 withErrorHandling {
-                    val decodedMessage = receivedMessage.decodeActionDataFromJson()
+                    val decodedMessage = decodeClientMessage(receivedMessage)
                     action(decodedMessage)
                 }
             }
@@ -31,4 +31,3 @@ private fun withErrorHandling(action: () -> Unit) {
         println(e.stackTrace)
     }
 }
-

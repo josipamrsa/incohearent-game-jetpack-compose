@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class LobbyUseCaseImpl @Inject constructor(private val playerRepository: PlayerRepository) :
     LobbyUseCase {
-    override suspend fun observeLobbyMessages() = playerRepository.observeSessionFlow()
+    override suspend fun observeLobbyMessages() = playerRepository.observeLobbyEvents()
 
     override suspend fun logPlayer(player: Player) {
         playerRepository.logNewPlayer(player)

@@ -23,4 +23,5 @@ rootProject.name = "IncohearentGame"
 include(":app")
 include(":data")
 include(":domain")
+include(":protocol")
 include(":server")

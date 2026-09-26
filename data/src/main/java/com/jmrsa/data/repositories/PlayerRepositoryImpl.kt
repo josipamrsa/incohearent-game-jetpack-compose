@@ -1,14 +1,12 @@
 package com.jmrsa.data.repositories
 
-import android.annotation.SuppressLint
-import com.jmrsa.data.networking.api.converters.toApiPlayer
-import com.jmrsa.data.networking.api.models.encodeApiPlayerToJson
+import com.jmrsa.data.networking.api.converters.toLobbyEvent
+import com.jmrsa.data.networking.api.converters.toPlayerDto
 import com.jmrsa.data.networking.api.realtime_client.RealtimeClient
-import com.jmrsa.data.networking.api.realtime_client.converter.toActionData
-import com.jmrsa.data.networking.api.realtime_client.model.SendEventMessages
-import com.jmrsa.domain.models.ActionData
+import com.jmrsa.domain.models.LobbyEvent
 import com.jmrsa.domain.models.Player
 import com.jmrsa.domain.repositories.PlayerRepository
+import com.jmrsa.protocol.ClientMessage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -16,10 +14,9 @@ import kotlinx.coroutines.flow.map
 class PlayerRepositoryImpl(
     private val client: RealtimeClient
 ): PlayerRepository {
-    @SuppressLint("LogNotTimber")
-    override fun observeSessionFlow(): Flow<ActionData> = client.sessionFlow.map { it.toActionData() }
+    override fun observeLobbyEvents(): Flow<LobbyEvent> = client.sessionFlow.map { it.toLobbyEvent() }
 
     override suspend fun logNewPlayer(player: Player) {
-        client.sendAction(SendEventMessages.LOG_NEW_PLAYER, player.toApiPlayer().encodeApiPlayerToJson())
+        client.send(ClientMessage.LogNewPlayer(player.toPlayerDto()))
     }
 }

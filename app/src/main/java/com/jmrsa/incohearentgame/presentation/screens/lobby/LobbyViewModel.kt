@@ -1,14 +1,11 @@
 package com.jmrsa.incohearentgame.presentation.screens.lobby
 
-import android.annotation.SuppressLint
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.toRoute
-import com.jmrsa.data.networking.api.models.decodeJsonToApiPlayer
+import com.jmrsa.domain.models.LobbyEvent
 import com.jmrsa.domain.use_cases.LobbyUseCase
 import com.jmrsa.incohearentgame.R
 import com.jmrsa.incohearentgame.core.base.BaseViewModel
-import com.jmrsa.incohearentgame.core.network.ReceiveEventMessages
 import com.jmrsa.incohearentgame.presentation.models.AppNotificationMessage
 import com.jmrsa.incohearentgame.presentation.models.AppPlayer
 import com.jmrsa.incohearentgame.presentation.models.toAppPlayer
@@ -27,7 +24,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
-@SuppressLint("LogNotTimber")
 @HiltViewModel
 class LobbyViewModel @Inject constructor(
     private val lobbyUseCase: LobbyUseCase,
@@ -48,8 +44,7 @@ class LobbyViewModel @Inject constructor(
     private val mutableEffect = MutableSharedFlow<LobbyContract.Effect>()
     override val effect = mutableEffect.asSharedFlow()
 
-    private fun handlePlayerUpdates(update: String) {
-        val player = update.decodeJsonToApiPlayer().toAppPlayer()
+    private fun handlePlayerUpdates(player: AppPlayer) {
         val updatedList =
             mutableState.value.players.toMutableList().plus(player.username)
         val lobbyMessages = mutableState.value.lobbyNotifications.toMutableList().plus(
@@ -69,13 +64,9 @@ class LobbyViewModel @Inject constructor(
         mutableState.update { it.copy(player = player) }
 
         launchInScope {
-            lobbyUseCase.observeLobbyMessages().collect { update ->
-                when (update.action) {
-                    ReceiveEventMessages.NEW_PLAYER_JOINED -> handlePlayerUpdates(update.data)
-
-                    else -> {
-                        Log.d("LobbyViewModel", "${update.action} >> ${update.data}")
-                    }
+            lobbyUseCase.observeLobbyMessages().collect { event ->
+                when (event) {
+                    is LobbyEvent.PlayerJoined -> handlePlayerUpdates(event.player.toAppPlayer())
                 }
             }
 

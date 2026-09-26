@@ -19,6 +19,8 @@ application {
 }
 
 dependencies {
+    implementation(project(":protocol"))
+
     implementation(libs.ktor.server.content.negotiation)
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.server.serialization.kotlinx.json)
