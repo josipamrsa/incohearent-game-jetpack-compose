@@ -21,7 +21,21 @@ This app was developed using a combination of modern technologies to ensure a sm
   
 ### Backend
 
-- **Ktor**: The backend of the application is powered by Ktor, a modern Kotlin framework for building asynchronous servers and clients. The backend handles user authentication, real-time game state synchronization, and scoring.
+- **Ktor**: The backend of the application is powered by Ktor, a modern Kotlin framework for building asynchronous servers and clients. It keeps players connected over **WebSockets** and synchronizes the game state between them in real time.
+
+### Shared protocol
+
+- The client and the server talk over a WebSocket at `/lobby`. Every message is a JSON object with a `type` field, e.g. `{"type":"LOG_NEW_PLAYER","player":{...}}`. All message types are defined once in the `protocol` module and used by both sides.
+
+## Project Structure
+
+| Module | Description |
+|---|---|
+| `app` | Android app: Jetpack Compose UI, ViewModels, navigation, DI |
+| `domain` | Pure Kotlin models, repository interfaces and use cases |
+| `data` | Realtime client and repository implementations |
+| `protocol` | Messages exchanged between client and server (shared) |
+| `server` | Ktor server |
 
 ## Getting Started
 
@@ -29,30 +43,38 @@ To get started with the project, follow these steps:
 
 ### Prerequisites
 
-- **Android Studio**: For the client app, you’ll need to have Android Studio installed.
-- **Kotlin**: Ensure that Kotlin is installed on your machine.
-- **Ktor**: For the backend, set up a Ktor server (TBD) with the provided configurations.
+- **Android Studio** (includes the JDK 17 it needs). The whole project, server included, is one Gradle build.
 
 ### Installation
 
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/your-username/incohearent-game-app.git
+    git clone https://github.com/josipamrsa/incohearent-game-jetpack-compose.git
     ```
 
-2. Navigate to the project directory and open the project in Android Studio.
+2. Open the project in Android Studio.
 
-3. Build and run the app on your Android device or emulator.
-
-4. To run the backend, navigate to the `backend` directory and start the Ktor server:
+3. Start the server with the **Server** run configuration, or from the terminal:
 
     ```bash
-    cd backend
-    ./gradlew run
+    ./gradlew :server:run
     ```
 
-5. Once the server is running, configure the client app to point to the correct server URL.
+    It listens on port `8080`.
+
+4. Point the app at the server: set `BASE_SOCKET_URL` in `data/build.gradle.kts` to your computer's address on the local network (e.g. `ws://192.168.1.10:8080`).
+
+5. Build and run the `app` configuration on your Android device or emulator.
+
+### Building the server for deployment
+
+```bash
+./gradlew -PserverOnly :server:buildFatJar
+java -jar server/build/libs/server-all.jar
+```
+
+`-PserverOnly` builds only the `server` and `protocol` modules, so no Android SDK is needed.
 
 ## How to Play
 

@@ -20,8 +20,15 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "IncohearentGame"
-include(":app")
-include(":data")
-include(":domain")
+
+// `-PserverOnly` configures just the server and the protocol, so the server can be built
+// on a machine without the Android SDK (e.g. a Docker build or a hosting platform).
+val serverOnly = providers.gradleProperty("serverOnly").isPresent
+
+if (!serverOnly) {
+    include(":app")
+    include(":data")
+    include(":domain")
+}
 include(":protocol")
 include(":server")
