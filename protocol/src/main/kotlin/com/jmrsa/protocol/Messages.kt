@@ -37,6 +37,12 @@ sealed interface ClientMessage {
 @Serializable
 sealed interface ServerMessage {
 
+    /** Sent only to the session that just logged in, confirming its own join. */
+    @Serializable
+    @SerialName("JOINED_LOBBY")
+    data class JoinedLobby(val player: PlayerDto) : ServerMessage
+
+    /** Sent to every other session in the lobby when someone logs in. */
     @Serializable
     @SerialName("NEW_PLAYER_JOINED")
     data class NewPlayerJoined(val player: PlayerDto) : ServerMessage

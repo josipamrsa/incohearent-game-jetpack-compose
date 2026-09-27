@@ -44,11 +44,13 @@ class LobbyViewModel @Inject constructor(
     private val mutableEffect = MutableSharedFlow<LobbyContract.Effect>()
     override val effect = mutableEffect.asSharedFlow()
 
-    private fun handlePlayerUpdates(player: AppPlayer) {
-        val updatedList =
-            mutableState.value.players.toMutableList().plus(player.username)
-        val lobbyMessages = mutableState.value.lobbyNotifications.toMutableList().plus(
-            AppNotificationMessage(R.string.inc_notif_new_player_joined, listOf(player.username))
+    private fun handlePlayerUpdates(player: AppPlayer, isMe: Boolean = false) {
+        val updatedList = mutableState.value.players.plus(
+            LobbyContract.LobbyPlayer(username = player.username, isMe = isMe)
+        )
+        val notification = if (isMe) R.string.inc_notif_self_joined else R.string.inc_notif_new_player_joined
+        val lobbyMessages = mutableState.value.lobbyNotifications.plus(
+            AppNotificationMessage(notification, listOf(player.username))
         )
 
         mutableState.update {
@@ -66,6 +68,7 @@ class LobbyViewModel @Inject constructor(
         launchInScope {
             lobbyUseCase.observeLobbyMessages().collect { event ->
                 when (event) {
+                    is LobbyEvent.SelfJoined -> handlePlayerUpdates(event.player.toAppPlayer(), isMe = true)
                     is LobbyEvent.PlayerJoined -> handlePlayerUpdates(event.player.toAppPlayer())
                 }
             }
@@ -90,6 +93,6 @@ class LobbyViewModel @Inject constructor(
             LightOrange,
             MuddyYellow
         )
-        val PLAYERS = emptyList<String>()
+        val PLAYERS = emptyList<LobbyContract.LobbyPlayer>()
     }
 }

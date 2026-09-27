@@ -16,9 +16,13 @@ fun Route.lobbySocket(sessionManager: SessionManager) {
             listenForIncomingFrames(incoming) { message ->
                 launch {
                     when (message) {
-                        is ClientMessage.LogNewPlayer -> sessionManager.broadcastMessage(
-                            ServerMessage.NewPlayerJoined(message.player)
-                        )
+                        is ClientMessage.LogNewPlayer -> {
+                            sessionManager.sendMessage(this@webSocket, ServerMessage.JoinedLobby(message.player))
+                            sessionManager.broadcastMessage(
+                                ServerMessage.NewPlayerJoined(message.player),
+                                except = this@webSocket
+                            )
+                        }
 
                         ClientMessage.BeginGame -> { /* TODO */ }
                     }
