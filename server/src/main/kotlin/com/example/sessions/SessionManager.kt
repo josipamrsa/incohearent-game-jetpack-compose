@@ -3,9 +3,11 @@ package com.example.sessions
 import com.jmrsa.protocol.ServerMessage
 import com.jmrsa.protocol.encode
 import io.ktor.websocket.*
+import java.util.concurrent.ConcurrentHashMap
 
 object SessionManager {
-    private val _sessions = mutableSetOf<WebSocketSession>()
+    // Mutated from every connection's coroutine; a concurrent set also lets broadcasts iterate while sessions come and go.
+    private val _sessions: MutableSet<WebSocketSession> = ConcurrentHashMap.newKeySet()
 
     fun addSession(session: WebSocketSession) {
         _sessions.add(session)
