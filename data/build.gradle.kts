@@ -25,7 +25,7 @@ android {
     buildTypes {
         debug {
             isMinifyEnabled = false
-            buildConfigField("String", "BASE_SOCKET_URL", "\"ws://192.168.178.42:8080\"")
+            buildConfigField("String", "BASE_SOCKET_URL", "\"ws://192.168.178.23:8080\"")
         }
         release {
             isMinifyEnabled = false
