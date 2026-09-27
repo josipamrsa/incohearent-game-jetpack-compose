@@ -17,8 +17,15 @@ object SessionManager {
 
     suspend fun broadcastMessage(message: ServerMessage) {
         println("Broadcasting: >> $message")
+        val deadSessions = mutableListOf<WebSocketSession>()
         _sessions.forEach { session ->
-            session.send(Frame.Text(message.encode()))
+            try {
+                session.send(Frame.Text(message.encode()))
+            } catch (e: Exception) {
+                println("Failed to send to session, dropping it: >> ${e.message}")
+                deadSessions.add(session)
+            }
         }
+        deadSessions.forEach(::removeSession)
     }
 }
