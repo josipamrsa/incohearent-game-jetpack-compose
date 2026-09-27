@@ -3,9 +3,10 @@ package com.jmrsa.data.networking.api.realtime_client
 import android.annotation.SuppressLint
 import android.util.Log
 import com.jmrsa.data.networking.NetworkContract.LOBBY_SOCKET_URL
-import com.jmrsa.data.networking.api.realtime_client.model.ApiActionData
-import com.jmrsa.data.networking.api.realtime_client.model.decodeJsonToApiActionData
-import com.jmrsa.data.networking.api.realtime_client.model.encodeApiActionDataToJson
+import com.jmrsa.protocol.ClientMessage
+import com.jmrsa.protocol.ServerMessage
+import com.jmrsa.protocol.decodeServerMessage
+import com.jmrsa.protocol.encode
 import io.ktor.client.HttpClient
 import io.ktor.client.features.websocket.webSocketSession
 import io.ktor.client.request.url
@@ -29,7 +30,7 @@ class RealtimeClientImpl(
     private var session: WebSocketSession? = null
     private var sessionJob: Job? = null
     private var isActive = true
-    override val sessionFlow = MutableSharedFlow<ApiActionData>(replay = 1)
+    override val sessionFlow = MutableSharedFlow<ServerMessage>(replay = 1)
 
     init {
         startSession()
@@ -62,17 +63,16 @@ class RealtimeClientImpl(
                 ?.filterIsInstance<Frame.Text>()
                 ?.map { it.readText() }
                 ?.collect { msg ->
-                    sessionFlow.emit(msg.decodeJsonToApiActionData())
+                    sessionFlow.emit(decodeServerMessage(msg))
                 }
         } finally {
             Log.d("RealtimeClient", "Attempting to reconnect...")
         }
     }
 
-    override suspend fun sendAction(action: String, data: String) {
-        val apiActionData = ApiActionData(action, data)
+    override suspend fun send(message: ClientMessage) {
         session?.outgoing?.send(
-            Frame.Text(apiActionData.encodeApiActionDataToJson())
+            Frame.Text(message.encode())
         )
     }
 

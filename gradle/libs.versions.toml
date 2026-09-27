@@ -1,6 +1,6 @@
 [versions]
 agp = "8.7.2"
-kotlin = "2.0.20"
+kotlin = "2.1.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -8,7 +8,7 @@ espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.6"
 activityCompose = "1.9.3"
 composeBom = "2024.10.00"
-jetbrainsKotlinJvm = "2.0.20"
+jetbrainsKotlinJvm = "2.1.0"
 appcompat = "1.7.0"
 material = "1.12.0"
 lifecycle = "2.8.6"
@@ -18,10 +18,14 @@ hilt-compiler = "2.51.1"
 room = "2.6.1"
 retrofit = "2.11.0"
 okhttp = "5.0.0-alpha.14"
-kotlin-serialization = "1.7.2"
+kotlin-serialization = "1.7.3"
 google-services = "4.4.2"
 ktorVersion = "1.6.3"
 multidex = "2.0.1"
+
+# Server
+ktor-server = "3.0.3"
+logback = "1.4.14"
 
 
 [libraries]
@@ -94,6 +98,18 @@ ktor-websockets = {group = "io.ktor", name = "ktor-client-websockets", version.r
 ktor-logging = {group = "io.ktor", name = "ktor-client-logging", version.ref = "ktorVersion"}
 androidx-multidex = { group = "androidx.multidex", name = "multidex", version.ref = "multidex" }
 
+# Server
+ktor-server-core = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor-server" }
+ktor-server-netty = { module = "io.ktor:ktor-server-netty-jvm", version.ref = "ktor-server" }
+ktor-server-host-common = { module = "io.ktor:ktor-server-host-common-jvm", version.ref = "ktor-server" }
+ktor-server-websockets = { module = "io.ktor:ktor-server-websockets-jvm", version.ref = "ktor-server" }
+ktor-server-content-negotiation = { module = "io.ktor:ktor-server-content-negotiation-jvm", version.ref = "ktor-server" }
+ktor-server-config-yaml = { module = "io.ktor:ktor-server-config-yaml-jvm", version.ref = "ktor-server" }
+ktor-server-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json-jvm", version.ref = "ktor-server" }
+ktor-server-test-host = { module = "io.ktor:ktor-server-test-host-jvm", version.ref = "ktor-server" }
+logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
@@ -101,5 +117,6 @@ jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serializati
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 android-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt-compiler" }
-ksp = { id = "com.google.devtools.ksp", version = "2.0.0-1.0.22" }
+ksp = { id = "com.google.devtools.ksp", version = "2.1.0-1.0.29" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+ktor = { id = "io.ktor.plugin", version.ref = "ktor-server" }

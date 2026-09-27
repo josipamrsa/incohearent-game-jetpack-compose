@@ -1,6 +1,5 @@
 package com.jmrsa.incohearentgame.presentation.models
 
-import com.jmrsa.data.networking.api.models.ApiPlayer
 import com.jmrsa.domain.models.Player
 
 data class AppPlayer(
@@ -14,11 +13,6 @@ fun AppPlayer.toPlayer() = Player(
 )
 
 fun Player.toAppPlayer() = AppPlayer(
-    username = username,
-    color = color
-)
-
-fun ApiPlayer.toAppPlayer() = AppPlayer(
     username = username,
     color = color
 )
