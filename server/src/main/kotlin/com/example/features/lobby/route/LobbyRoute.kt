@@ -12,16 +12,20 @@ import kotlinx.coroutines.launch
 fun Route.lobbySocket(sessionManager: SessionManager) {
     webSocket(Protocol.LOBBY_PATH) {
         sessionManager.addSession(this)
-        listenForIncomingFrames(incoming) { message ->
-            launch {
-                when (message) {
-                    is ClientMessage.LogNewPlayer -> sessionManager.broadcastMessage(
-                        ServerMessage.NewPlayerJoined(message.player)
-                    )
+        try {
+            listenForIncomingFrames(incoming) { message ->
+                launch {
+                    when (message) {
+                        is ClientMessage.LogNewPlayer -> sessionManager.broadcastMessage(
+                            ServerMessage.NewPlayerJoined(message.player)
+                        )
 
-                    ClientMessage.BeginGame -> { /* TODO */ }
+                        ClientMessage.BeginGame -> { /* TODO */ }
+                    }
                 }
             }
+        } finally {
+            sessionManager.removeSession(this)
         }
     }
 }
