@@ -15,8 +15,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.jmrsa.incohearentgame.R
+import com.jmrsa.incohearentgame.presentation.screens.lobby.LobbyContract
 import com.jmrsa.incohearentgame.presentation.utils.DUMMY_PLAYERS
 import com.jmrsa.incohearentgame.presentation.utils.DUMMY_PLAYER_COLORS
 import com.jmrsa.incohearentgame.ui.theme.IncohearentGameTheme
@@ -42,7 +45,7 @@ fun PlayerChip(
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun PlayerGridView(
-    playerList: List<String>,
+    playerList: List<LobbyContract.LobbyPlayer>,
     playerColors: List<Color>,
     sections: Int = 4
 ) {
@@ -62,7 +65,11 @@ fun PlayerGridView(
             ) {
                 row.forEach { player ->
                     PlayerChip(
-                        label = player,
+                        label = if (player.isMe) {
+                            stringResource(R.string.inc_lobby_player_me, player.username)
+                        } else {
+                            player.username
+                        },
                         color = playerColors.random()
                     )
                 }
@@ -80,7 +87,9 @@ fun PreviewPlayerChip() {
 @Composable
 fun PreviewPlayerGridView() {
     IncohearentGameTheme {
-        val players = DUMMY_PLAYERS
+        val players = DUMMY_PLAYERS.mapIndexed { index, name ->
+            LobbyContract.LobbyPlayer(username = name, isMe = index == 0)
+        }
         val colors = DUMMY_PLAYER_COLORS
 
         PlayerGridView(

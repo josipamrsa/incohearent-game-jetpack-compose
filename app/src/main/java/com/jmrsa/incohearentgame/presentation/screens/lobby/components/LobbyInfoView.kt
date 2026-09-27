@@ -47,7 +47,7 @@ fun LobbyInfoView(notifications: List<AppNotificationMessage>? = null) {
         } else {
             items(notifications) { notification ->
                 Text(
-                    text = NotificationFormatter.toLobbyNotification(notification.args),
+                    text = NotificationFormatter.toLobbyNotification(notification),
                     modifier = Modifier.padding(
                         vertical = 5.dp,
                         horizontal = 15.dp

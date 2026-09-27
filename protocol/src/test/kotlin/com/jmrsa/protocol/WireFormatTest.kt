@@ -26,6 +26,12 @@ class WireFormatTest {
     )
 
     @Test
+    fun joinedLobby() = assertWire(
+        ServerMessage.JoinedLobby(player),
+        """{"type":"JOINED_LOBBY","player":{"username":"Ana","color":"#FF7F50"}}"""
+    )
+
+    @Test
     fun newPlayerJoined() = assertWire(
         ServerMessage.NewPlayerJoined(player),
         """{"type":"NEW_PLAYER_JOINED","player":{"username":"Ana","color":"#FF7F50"}}"""

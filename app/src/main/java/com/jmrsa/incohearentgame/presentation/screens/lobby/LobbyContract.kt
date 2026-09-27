@@ -10,10 +10,15 @@ interface LobbyContract:
 
     data class State(
         val player: AppPlayer = AppPlayer(),
-        val players: List<String> = emptyList(),
+        val players: List<LobbyPlayer> = emptyList(),
         val playerColors: List<Color> = emptyList(),
         val lobbyName: String = "",
         val lobbyNotifications: List<AppNotificationMessage> = emptyList()
+    )
+
+    data class LobbyPlayer(
+        val username: String,
+        val isMe: Boolean = false
     )
 
     sealed interface Event
